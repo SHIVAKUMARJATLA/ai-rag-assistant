@@ -29,3 +29,20 @@ Preprocessing scripts are provided to reproduce the dataset.
 A lightweight retrieval test script is included to verify that the vector
 database returns relevant document chunks for domain-specific queries
 before integrating the full RAG pipeline.
+
+## Retrieval-Augmented Generation (RAG)
+
+- Built an end-to-end Retrieval-Augmented Generation (RAG) pipeline for answering domain-specific questions over academic regulation documents
+- Integrated semantic retrieval from a ChromaDB vector store with a strict prompt to reduce hallucinations
+- Implemented an interactive question–answering interface
+- Used a local LLM (Llama 3 via Ollama) to avoid API quota limitations while keeping the architecture LLM-agnostic
+
+### Architecture Overview
+
+The system follows a modular RAG architecture:
+- Document preprocessing and chunking
+- Vector embedding and storage using ChromaDB
+- Semantic retrieval of relevant context
+- Grounded answer generation using a local LLM
+
+The LLM layer can be easily swapped with cloud-based models (e.g., Gemini or OpenAI) without changing the retrieval pipeline.
