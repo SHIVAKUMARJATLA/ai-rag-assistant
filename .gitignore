@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 venv/
 vector_store/
+.env
+scripts/list_gemini_models.py
