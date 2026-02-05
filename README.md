@@ -46,3 +46,10 @@ The system follows a modular RAG architecture:
 - Grounded answer generation using a local LLM
 
 The LLM layer can be easily swapped with cloud-based models (e.g., Gemini or OpenAI) without changing the retrieval pipeline.
+
+## Agentic RAG with LangGraph
+
+- Implemented an agentic RAG workflow using LangGraph
+- Modeled retrieval, answer generation, and verification as explicit agent states
+- Reduced hallucinations through structured context verification
+- Designed the system to be easily extensible for future tools and memory
