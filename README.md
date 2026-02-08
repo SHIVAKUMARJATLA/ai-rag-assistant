@@ -53,3 +53,11 @@ The LLM layer can be easily swapped with cloud-based models (e.g., Gemini or Ope
 - Modeled retrieval, answer generation, and verification as explicit agent states
 - Reduced hallucinations through structured context verification
 - Designed the system to be easily extensible for future tools and memory
+
+
+## FastAPI Backend
+
+- Built a FastAPI backend to expose the agentic RAG system via REST APIs
+- Implemented request and response validation using Pydantic models
+- Optimized backend performance by loading vector stores and LLMs at application startup
+- Enabled interactive testing through auto-generated Swagger documentation
