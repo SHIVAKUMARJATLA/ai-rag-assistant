@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -8,11 +9,20 @@ from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import PromptTemplate
+from scripts.database import SessionLocal, QueryLog, init_db
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()
+    yield
 
 app = FastAPI(
+    lifespan=lifespan,
     title="Aacademic Regulations AI Assistant",
     version="1.0"
 )
+
+
 
 class AgentState(TypedDict):
     question: str
@@ -102,4 +112,15 @@ def health_check():
 @app.post("/ask", response_model=AnswerResponse)
 def ask_question_api(request: QuestionRequest):
     result = agent.invoke({"question": request.question})
-    return {"answer": result["answer"]}
+    answer = result["answer"]
+
+    db = SessionLocal()
+    log = QueryLog(
+        question=request.question,
+        answer=answer
+    )
+    db.add(log)
+    db.commit()
+    db.close()
+    return {"answer": answer}
+
