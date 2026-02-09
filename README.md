@@ -61,3 +61,18 @@ The LLM layer can be easily swapped with cloud-based models (e.g., Gemini or Ope
 - Implemented request and response validation using Pydantic models
 - Optimized backend performance by loading vector stores and LLMs at application startup
 - Enabled interactive testing through auto-generated Swagger documentation
+
+
+## Database & Persistence
+
+This project uses PostgreSQL to persist user queries and AI-generated responses.
+
+- PostgreSQL 18 as the relational database
+- SQLAlchemy ORM for database interactions
+- FastAPI lifespan events for database initialization
+- Each `/ask` request is logged with:
+  - Question
+  - Answer
+  - Timestamp
+
+This enables analytics, monitoring, and future extensions such as usage tracking.
