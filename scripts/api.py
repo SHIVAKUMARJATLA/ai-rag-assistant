@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from pydantic import BaseModel
+from sqlalchemy import func
 
 from typing import TypedDict, List
 from langgraph.graph import StateGraph, END
@@ -49,10 +50,10 @@ llm = ChatOllama(
 
 ANSWER_PROMPT = PromptTemplate(
     template="""
-You are an academic regulation assistant.
+You are an Academic Regulations AI Assistant.
 
-Answer the question using ONLY the context below.
-If the answer is not present, say:
+Answer strictly using the provided context.
+If the information is missing, reply exactly:
 "I could not find this information in the provided regulations."
 
 Context:
@@ -61,7 +62,7 @@ Context:
 Question:
 {question}
 
-Answer:
+Answer (clear and concise):
 """,
     input_variables=["context", "question"]
 )
@@ -124,3 +125,22 @@ def ask_question_api(request: QuestionRequest):
     db.close()
     return {"answer": answer}
 
+@app.get("/stats")
+def get_status():
+    db = SessionLocal()
+    total_queries = db.query(func.count(QueryLog.id)).scalar()
+    latest_queries = (
+        db.query(QueryLog.question, QueryLog.created_at)
+        .order_by(QueryLog.created_at.desc())
+        .limit(5)
+        .all()
+    )
+
+    db.close()
+
+    return {
+        "total_queries": total_queries,
+        "recent_queries": [
+            {"question": q, "timestamp": str(t)} for q, t in latest_queries
+        ],
+    }

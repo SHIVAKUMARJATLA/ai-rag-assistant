@@ -1,5 +1,32 @@
-# ai-rag-assistant
+# Academic Regulations AI Assistant
 
+An Agentic Retrieval-Augmented Generation (RAG) system that answers academic
+regulation queries using official documents.
+
+Built with FastAPI, PostgreSQL, LangGraph, and a local LLM (LLaMA 3 via Ollama).
+
+## Tech Stack
+- Python
+- FastAPI
+- LangGraph (Agentic workflows)
+- LangChain
+- Ollama (LLaMA 3)
+- ChromaDB (Vector Store)
+- PostgreSQL
+- SQLAlchemy
+
+## Features
+- Agentic RAG pipeline using LangGraph
+- Semantic search over academic regulations
+- REST API for question answering
+- PostgreSQL persistence for queries & responses
+- Analytics endpoint for usage statistics
+- Fully local LLM (no API credits required)
+
+## API Endpoints
+- POST /ask → Ask a regulation-related question
+- GET /stats → View query analytics
+- GET /health → Health check
 
 ## Dataset Source
 
