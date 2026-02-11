@@ -6,8 +6,8 @@ from sqlalchemy import func
 from typing import TypedDict, List
 from langgraph.graph import StateGraph, END
 
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import PromptTemplate
 from scripts.database import SessionLocal, QueryLog, init_db
